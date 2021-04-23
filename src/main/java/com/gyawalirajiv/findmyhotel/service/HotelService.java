@@ -11,4 +11,8 @@ public interface HotelService {
     Flux<Hotel> findAll();
 
     Mono<Hotel> save(Hotel hotel);
+
+    Mono<Hotel> update(Hotel payload);
+
+    Mono<Void> delete(String id);
 }

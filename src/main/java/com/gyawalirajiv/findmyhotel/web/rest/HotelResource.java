@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/hotels")
@@ -36,6 +34,20 @@ public class HotelResource {
         if(payload.getId() != null) throw new BadRequestAlertException("Invalid Request! Contains Id!");
 
         return hotelService.save(payload);
+    }
+
+    @PutMapping("{id}")
+    public Mono<Hotel> update(@PathVariable String id, @RequestBody Hotel payload) throws URISyntaxException {
+        if(!payload.getId().equals(id)) throw new BadRequestAlertException("Invalid Request! No ID Found!");
+
+        return hotelService.update(payload);
+    }
+
+    @DeleteMapping("{id}")
+    public Mono<Void> delete(@PathVariable String id){
+        if(id.equals("") || id == null) throw new BadRequestAlertException("No ID Present!");
+
+        return hotelService.delete(id);
     }
 
 }
